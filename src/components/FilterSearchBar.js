@@ -30,13 +30,14 @@ const styles = {
     justifyContent: 'space-between',
     padding: '20px',
     backgroundColor: '#ECF0F1',
+    width:'30%',
   },
   select: {
     marginRight: '10px',
   },
   input: {
     flex: '1',
-    padding: '10px',
+    padding: '5px',
   },
 };
 
