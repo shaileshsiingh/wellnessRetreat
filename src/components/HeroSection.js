@@ -14,7 +14,7 @@ const styles = {
   hero: {
     position: 'relative',
     height: '400px',
-    backgroundImage: 'url(https://example.com/your-image.jpg)', // Replace with your image URL
+    backgroundImage: 'url(https://c0.wallpaperflare.com/preview/976/1006/398/yoga-balance-nature-handstand.jpg)', // Replace with your image URL
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },

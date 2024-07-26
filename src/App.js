@@ -4,32 +4,52 @@ import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import FilterSearchBar from './components/FilterSearchBar';
 import RetreatList from './components/RetreatList';
+import Pagination from './components/Pagination';
 
 const App = () => {
   const [retreats, setRetreats] = useState([]);
   const [filteredRetreats, setFilteredRetreats] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    // Fetch data from API and set it to `retreats` and `filteredRetreats`
-    // For now, use mock data
-    const fetchData = async () => {
-      const response = await fetch('https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats');
+    fetchRetreats();
+  }, [currentPage]);
+
+  const fetchRetreats = async (filterParams = {}, searchQuery = '') => {
+    try {
+      const { date, type } = filterParams;
+      let url = `https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats?page=${currentPage}&limit=5`;
+      
+      if (date) url += `&date=${date}`;
+      if (type) url += `&type=${type}`;
+      if (searchQuery) url += `&search=${searchQuery}`;
+
+      const response = await fetch(url);
       const data = await response.json();
+      
       setRetreats(data);
       setFilteredRetreats(data);
-    };
-    fetchData();
-  }, []);
+      setTotalPages(Math.ceil(data.total / 5));  // Assuming the API returns the total number of retreats
+    } catch (error) {
+      console.error('Error fetching retreats:', error);
+    }
+  };
 
   const handleFilterChange = (value, type) => {
-    // Implement filter logic
+    const filterParams = {};
+    if (type === 'date') filterParams.date = value;
+    if (type === 'type') filterParams.type = value;
+
+    fetchRetreats(filterParams);
   };
 
   const handleSearch = (query) => {
-    const filtered = retreats.filter((retreat) =>
-      retreat.title.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredRetreats(filtered);
+    fetchRetreats({}, query);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -38,6 +58,7 @@ const App = () => {
       <HeroSection />
       <FilterSearchBar onFilterChange={handleFilterChange} onSearch={handleSearch} />
       <RetreatList retreats={filteredRetreats} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>
   );
 };

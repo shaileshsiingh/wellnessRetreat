@@ -5,11 +5,15 @@ const FilterSearchBar = ({ onFilterChange, onSearch }) => (
   <div style={styles.container}>
     <select style={styles.select} onChange={(e) => onFilterChange(e.target.value, 'date')}>
       <option value="">Filter by Date</option>
-      {/* Add more options here */}
+      {/* Replace with actual date options */}
+      <option value="2024-07-27">July 27, 2024</option>
+      <option value="2024-08-01">August 1, 2024</option>
     </select>
     <select style={styles.select} onChange={(e) => onFilterChange(e.target.value, 'type')}>
       <option value="">Filter by Type</option>
-      {/* Add more options here */}
+      <option value="Yoga">Yoga</option>
+      <option value="Meditation">Meditation</option>
+      <option value="Detox">Detox</option>
     </select>
     <input
       type="text"
