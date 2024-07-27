@@ -1,40 +1,48 @@
-// RetreatCard.js
+// RetreatList.js
 import React from 'react';
 
-const RetreatCard = ({ retreat }) => {
+const RetreatList = ({ retreats }) => {
   return (
-    <div style={styles.card}>
-      <img src={retreat.image} alt={retreat.title} style={styles.image} />
-      <div style={styles.details}>
-        <h3>{retreat.title}</h3>
-        <p>{retreat.description}</p>
-        <p>Date: {retreat.date}</p>
-        <p>Location: {retreat.location}</p>
-        <p>Price: {retreat.price}</p>
-      </div>
+    <div style={styles.container}>
+      {retreats.map((retreat) => (
+        <div key={retreat.id} style={styles.card}>
+          <img src={retreat.image} alt={retreat.title} style={styles.image} />
+          <div>
+            <h2>{retreat.title}</h2>
+            <p>{retreat.description}</p>
+            <p><strong>Date:</strong> {retreat.date}</p>
+            <p><strong>Location:</strong> {retreat.location}</p>
+            <p><strong>Price:</strong> {retreat.price}</p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
 
 const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: '20px',
+    padding: '20px',
+  },
   card: {
+    border: '1px solid #ccc',
+    borderRadius: '10px',
+    padding: '15px',
+    width: '30%',
     display: 'flex',
     flexDirection: 'column',
-    border: '1px solid #ddd',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    margin: '10px',
-    padding: '5px',
+    alignItems: 'center',
   },
   image: {
-    width: '250px',
-    height: '200px',
+    width: '100%',
+    height: '150px',
     borderRadius: '10px',
-    marginBottom: '15px',
-  },
-  details: {
-    flex: 1,
+    objectFit: 'cover',
   },
 };
 
-export default RetreatCard;
+export default RetreatList;

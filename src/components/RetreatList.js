@@ -1,10 +1,13 @@
 // RetreatList.js
-import React from 'react';
+import React, { useContext } from 'react';
+import { RetreatContext } from '../context/RetreatContext';
 
-const RetreatList = ({ retreats }) => {
+const RetreatList = () => {
+  const { filteredRetreats } = useContext(RetreatContext);
+
   return (
     <div style={styles.container}>
-      {retreats.map((retreat) => (
+      {filteredRetreats.map((retreat) => (
         <div key={retreat.id} style={styles.card}>
           <img src={retreat.image} alt={retreat.title} style={styles.image} />
           <div>
@@ -22,8 +25,10 @@ const RetreatList = ({ retreats }) => {
 
 const styles = {
   container: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(1, 1fr)',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
     gap: '20px',
     padding: '20px',
   },
@@ -31,14 +36,16 @@ const styles = {
     border: '1px solid #ccc',
     borderRadius: '10px',
     padding: '15px',
+    width: '30%',
     display: 'flex',
-    alignItems: 'flex-start',
+    flexDirection: 'column',
+    alignItems: 'center',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
   image: {
-    width: '100px',
-    height: '100px',
+    width: '100%',
+    height: '150px',
     borderRadius: '10px',
-    marginRight: '15px',
     objectFit: 'cover',
   },
 };

@@ -1,46 +1,52 @@
 // Pagination.js
-import React from 'react';
+import React, { useContext } from 'react';
+import { RetreatContext } from '../context/RetreatContext';
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  if (totalPages <= 1) return null;
+const Pagination = () => {
+  const { currentPage, totalPages, setCurrentPage } = useContext(RetreatContext);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
 
   return (
-    <div style={styles.pagination}>
-      {currentPage > 1 && (
-        <button style={styles.button} onClick={() => onPageChange(currentPage - 1)}>
-          Previous
-        </button>
-      )}
-      <span style={styles.pageInfo}>
-        Page {currentPage} of {totalPages}
-      </span>
-      {currentPage < totalPages && (
-        <button style={styles.button} onClick={() => onPageChange(currentPage + 1)}>
-          Next
-        </button>
-      )}
+    <div style={styles.container}>
+      <button
+        style={styles.button}
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        Previous
+      </button>
+      <span>{`${currentPage} / ${totalPages}`}</span>
+      <button
+        style={styles.button}
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        Next
+      </button>
     </div>
   );
 };
 
 const styles = {
-  pagination: {
+  container: {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
     marginTop: '20px',
   },
   button: {
+    padding: '10px 20px',
     margin: '0 5px',
-    padding: '10px 15px',
-    border: '1px solid #2C3E50',
     borderRadius: '5px',
+    border: 'none',
     backgroundColor: '#2C3E50',
     color: 'white',
     cursor: 'pointer',
-    fontSize: '16px',
-  },
-  pageInfo: {
-    alignSelf: 'center',
   },
 };
 

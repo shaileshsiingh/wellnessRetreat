@@ -1,28 +1,36 @@
 // FilterSearchBar.js
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { RetreatContext } from '../context/RetreatContext';
 
-const FilterSearchBar = ({ onFilterChange, onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+const FilterSearchBar = () => {
+  const { setFilterParams, setSearchQuery } = useContext(RetreatContext);
 
-  const handleSearch = () => {
-    onSearch(searchQuery);
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilterParams((prevParams) => ({ ...prevParams, [name]: value }));
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.filters}>
-        <button onClick={() => onFilterChange('asc', 'date')} style={styles.button}>Filter by Date</button>
-        <button onClick={() => onFilterChange('Yoga', 'type')} style={styles.button}>Filter by Type</button>
+        <select name="type" onChange={handleFilterChange} style={styles.select}>
+          <option value="">Filter by Type</option>
+          <option value="Yoga">Yoga</option>
+          <option value="Meditation">Meditation</option>
+          <option value="Detox">Detox</option>
+        </select>
       </div>
       <div style={styles.search}>
         <input
           type="text"
           placeholder="Search retreats by title"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearch}
           style={styles.input}
         />
-        <button onClick={handleSearch} style={styles.button}>Search</button>
       </div>
     </div>
   );
@@ -37,19 +45,19 @@ const styles = {
   },
   filters: {
     display: 'flex',
+    gap: '10px',
   },
-  search: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  button: {
+  select: {
     padding: '10px 15px',
-    margin: '0 5px',
     borderRadius: '5px',
     backgroundColor: '#2C3E50',
     color: 'white',
     cursor: 'pointer',
     border: 'none',
+  },
+  search: {
+    display: 'flex',
+    alignItems: 'center',
   },
   input: {
     padding: '10px',
