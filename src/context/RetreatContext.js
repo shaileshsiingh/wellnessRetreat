@@ -18,17 +18,24 @@ const RetreatProvider = ({ children }) => {
 
   const fetchRetreats = async () => {
     try {
-      let url = `https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats`;
-      if (filterParams.type) url += `?type=${filterParams.type}`;
-      if (searchQuery) url += `&search=${searchQuery}`;
+      let url = `https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats?page=${currentPage}&limit=${itemsPerPage}`;
+      const query = [];
+      if (filterParams.type) query.push(`type=${filterParams.type}`);
+      if (filterParams.date) query.push(`date=${filterParams.date}`);
+      if (searchQuery) query.push(`search=${searchQuery}`);
+      if (query.length > 0) url += `&${query.join('&')}`;
 
       const response = await fetch(url);
+      if (!response.ok) throw new Error('Network response was not ok');
       const data = await response.json();
       setRetreats(data);
-      setFilteredRetreats(data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
+      setFilteredRetreats(data);
       setTotalPages(Math.ceil(data.length / itemsPerPage));
     } catch (error) {
       console.error('Error fetching retreats:', error);
+      setRetreats([]);
+      setFilteredRetreats([]);
+      setTotalPages(1);
     }
   };
 

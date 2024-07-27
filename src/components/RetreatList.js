@@ -7,18 +7,22 @@ const RetreatList = () => {
 
   return (
     <div style={styles.container}>
-      {filteredRetreats.map((retreat) => (
-        <div key={retreat.id} style={styles.card}>
-          <img src={retreat.image} alt={retreat.title} style={styles.image} />
-          <div>
-            <h2>{retreat.title}</h2>
-            <p>{retreat.description}</p>
-            <p><strong>Date:</strong> {retreat.date}</p>
-            <p><strong>Location:</strong> {retreat.location}</p>
-            <p><strong>Price:</strong> {retreat.price}</p>
+      {filteredRetreats.length > 0 ? (
+        filteredRetreats.map((retreat) => (
+          <div key={retreat.id} style={styles.card}>
+            <img src={retreat.image} alt={retreat.title} style={styles.image} />
+            <div>
+              <h2>{retreat.title}</h2>
+              <p>{retreat.description}</p>
+              <p><strong>Date:</strong> {retreat.date}</p>
+              <p><strong>Location:</strong> {retreat.location}</p>
+              <p><strong>Price:</strong> {retreat.price}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No retreats found. Please adjust your search or filter criteria.</p>
+      )}
     </div>
   );
 };
@@ -36,6 +40,7 @@ const styles = {
     padding: '15px',
     width: '30%',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    marginBottom: '20px',
   },
   image: {
     width: '100%',

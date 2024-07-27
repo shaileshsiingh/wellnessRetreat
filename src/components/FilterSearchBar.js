@@ -23,6 +23,12 @@ const FilterSearchBar = () => {
           <option value="Meditation">Meditation</option>
           <option value="Detox">Detox</option>
         </select>
+        <select name="date" onChange={handleFilterChange} style={styles.select}>
+          <option value="">Filter by Date</option>
+          <option value="2023-08-01">August 2023</option>
+          <option value="2023-09-01">September 2023</option>
+          <option value="2023-10-01">October 2023</option>
+        </select>
       </div>
       <div style={styles.search}>
         <input
