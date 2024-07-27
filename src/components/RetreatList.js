@@ -26,10 +26,8 @@ const RetreatList = () => {
 const styles = {
   container: {
     display: 'flex',
-    flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-    gap: '20px',
     padding: '20px',
   },
   card: {
@@ -37,9 +35,6 @@ const styles = {
     borderRadius: '10px',
     padding: '15px',
     width: '30%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
   image: {

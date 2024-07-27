@@ -7,7 +7,7 @@ const RetreatProvider = ({ children }) => {
   const [retreats, setRetreats] = useState([]);
   const [filteredRetreats, setFilteredRetreats] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(5);
+  const [totalPages, setTotalPages] = useState(1);
   const [filterParams, setFilterParams] = useState({});
   const [searchQuery, setSearchQuery] = useState('');
   const itemsPerPage = 3;
@@ -18,14 +18,14 @@ const RetreatProvider = ({ children }) => {
 
   const fetchRetreats = async () => {
     try {
-      let url = `https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats?page=${currentPage}&limit=${itemsPerPage}`;
-      if (filterParams.type) url += `&type=${filterParams.type}`;
+      let url = `https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats`;
+      if (filterParams.type) url += `?type=${filterParams.type}`;
       if (searchQuery) url += `&search=${searchQuery}`;
 
       const response = await fetch(url);
       const data = await response.json();
       setRetreats(data);
-      setFilteredRetreats(data); // Assuming API provides already filtered data
+      setFilteredRetreats(data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
       setTotalPages(Math.ceil(data.length / itemsPerPage));
     } catch (error) {
       console.error('Error fetching retreats:', error);
