@@ -1,43 +1,61 @@
 // FilterSearchBar.js
-import React from 'react';
+import React, { useState } from 'react';
 
-const FilterSearchBar = ({ onFilterChange, onSearch }) => (
-  <div style={styles.container}>
-    <select style={styles.select} onChange={(e) => onFilterChange(e.target.value, 'date')}>
-      <option value="">Filter by Date</option>
-      {/* Replace with actual date options */}
-      <option value="2024-07-27">July 27, 2024</option>
-      <option value="2024-08-01">August 1, 2024</option>
-    </select>
-    <select style={styles.select} onChange={(e) => onFilterChange(e.target.value, 'type')}>
-      <option value="">Filter by Type</option>
-      <option value="Yoga">Yoga</option>
-      <option value="Meditation">Meditation</option>
-      <option value="Detox">Detox</option>
-    </select>
-    <input
-      type="text"
-      placeholder="Search retreats by title"
-      style={styles.input}
-      onChange={(e) => onSearch(e.target.value)}
-    />
-  </div>
-);
+const FilterSearchBar = ({ onFilterChange, onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    onSearch(searchQuery);
+  };
+
+  return (
+    <div style={styles.container}>
+      <div style={styles.filters}>
+        <button onClick={() => onFilterChange('asc', 'date')} style={styles.button}>Filter by Date</button>
+        <button onClick={() => onFilterChange('Yoga', 'type')} style={styles.button}>Filter by Type</button>
+      </div>
+      <div style={styles.search}>
+        <input
+          type="text"
+          placeholder="Search retreats by title"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={styles.input}
+        />
+        <button onClick={handleSearch} style={styles.button}>Search</button>
+      </div>
+    </div>
+  );
+};
 
 const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '20px',
-    backgroundColor: '#ECF0F1',
-    width:'30%',
+    alignItems: 'center',
+    margin: '20px 0',
   },
-  select: {
-    marginRight: '10px',
+  filters: {
+    display: 'flex',
+  },
+  search: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  button: {
+    padding: '10px 15px',
+    margin: '0 5px',
+    borderRadius: '5px',
+    backgroundColor: '#2C3E50',
+    color: 'white',
+    cursor: 'pointer',
+    border: 'none',
   },
   input: {
-    flex: '1',
-    padding: '5px',
+    padding: '10px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    marginRight: '10px',
   },
 };
 

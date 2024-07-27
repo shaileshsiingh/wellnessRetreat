@@ -9,7 +9,8 @@ const App = () => {
   const [retreats, setRetreats] = useState([]);
   const [filteredRetreats, setFilteredRetreats] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(4);
+  const itemsPerPage = 3;
 
   useEffect(() => {
     fetchRetreats();
@@ -17,19 +18,17 @@ const App = () => {
 
   const fetchRetreats = async (filterParams = {}, searchQuery = '') => {
     try {
-      const { date, type } = filterParams;
-      let url = `https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats?page=${currentPage}&limit=5`;
-
-      if (date) url += `&date=${date}`;
-      if (type) url += `&type=${type}`;
+      let url = `https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats?page=${currentPage}&limit=${itemsPerPage}`;
+      if (filterParams.date) url += `&date=${filterParams.date}`;
+      if (filterParams.type) url += `&type=${filterParams.type}`;
       if (searchQuery) url += `&search=${searchQuery}`;
 
       const response = await fetch(url);
       const data = await response.json();
 
       setRetreats(data);
-      setFilteredRetreats(data);
-      setTotalPages(Math.ceil(data.total / 5));  // Assuming the API returns the total number of retreats
+      setFilteredRetreats(data);  // Update filtered retreats
+      setTotalPages(Math.ceil(data.total / itemsPerPage)); // Assuming API provides total items count
     } catch (error) {
       console.error('Error fetching retreats:', error);
     }
@@ -55,9 +54,13 @@ const App = () => {
     <div>
       <Header />
       <HeroSection />
-      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-      <FilterSearchBar onFilterChange={handleFilterChange} onSearch={handleSearch} />
+      <FilterSearchBar 
+        onFilterChange={handleFilterChange} 
+        onSearch={handleSearch}
+        totalPages={totalPages}
+      />
       <RetreatList retreats={filteredRetreats} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>
   );
 };

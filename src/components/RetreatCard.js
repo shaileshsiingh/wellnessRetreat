@@ -1,30 +1,39 @@
-
 // RetreatCard.js
 import React from 'react';
 
-const RetreatCard = ({ retreat }) => (
-  <div style={tyles.card}>
-    <img src={retreat.image} alt={retreat.title} style={tyles.image} />
-    <h3>{retreat.title}</h3>
-    <p>{retreat.description}</p>
-    <p><strong>Date:</strong> {retreat.date}</p>
-  </div>
-);
+const RetreatCard = ({ retreat }) => {
+  return (
+    <div style={styles.card}>
+      <img src={retreat.image} alt={retreat.title} style={styles.image} />
+      <div style={styles.details}>
+        <h3>{retreat.title}</h3>
+        <p>{retreat.description}</p>
+        <p>Date: {retreat.date}</p>
+        <p>Location: {retreat.location}</p>
+        <p>Price: {retreat.price}</p>
+      </div>
+    </div>
+  );
+};
 
-const tyles = {
+const styles = {
   card: {
-    width: '300px',
+    display: 'flex',
+    flexDirection: 'column',
+    border: '1px solid #ddd',
+    borderRadius: '10px',
+    overflow: 'hidden',
     margin: '10px',
-    padding: '20px',
-    borderRadius: '5px',
-    backgroundColor: '#FFFFFF',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+    padding: '5px',
   },
   image: {
-    width: '100%',
+    width: '250px',
     height: '200px',
-    objectFit: 'cover',
-    borderRadius: '5px',
+    borderRadius: '10px',
+    marginBottom: '15px',
+  },
+  details: {
+    flex: 1,
   },
 };
 

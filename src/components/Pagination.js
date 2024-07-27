@@ -2,12 +2,7 @@
 import React from 'react';
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  if (totalPages <= 1) return null; // Do not render pagination if there is only one page or none
-
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
+  if (totalPages <= 1) return null;
 
   return (
     <div style={styles.pagination}>
@@ -16,15 +11,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           Previous
         </button>
       )}
-      {pageNumbers.map((number) => (
-        <button
-          key={number}
-          onClick={() => onPageChange(number)}
-          style={number === currentPage ? { ...styles.button, ...styles.active } : styles.button}
-        >
-          {number}
-        </button>
-      ))}
+      <span style={styles.pageInfo}>
+        Page {currentPage} of {totalPages}
+      </span>
       {currentPage < totalPages && (
         <button style={styles.button} onClick={() => onPageChange(currentPage + 1)}>
           Next
@@ -38,7 +27,7 @@ const styles = {
   pagination: {
     display: 'flex',
     justifyContent: 'center',
-    margin: '20px 0',
+    marginTop: '20px',
   },
   button: {
     margin: '0 5px',
@@ -50,9 +39,8 @@ const styles = {
     cursor: 'pointer',
     fontSize: '16px',
   },
-  active: {
-    backgroundColor: '#1ABC9C',
-    borderColor: '#1ABC9C',
+  pageInfo: {
+    alignSelf: 'center',
   },
 };
 
